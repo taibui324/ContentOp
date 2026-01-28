@@ -42,7 +42,12 @@ class Settings(BaseSettings):
     openai_api_key: str = ""
 
     # CORS
-    cors_origins: list[str] = ["http://localhost:5173", "http://localhost:3000"]
+    cors_origins: str = "http://localhost:5173,http://localhost:3000"
+
+    @property
+    def cors_origins_list(self) -> list[str]:
+        """Parse CORS origins from comma-separated string."""
+        return [origin.strip() for origin in self.cors_origins.split(",")]
 
     # Email (for password reset)
     smtp_host: str = ""
